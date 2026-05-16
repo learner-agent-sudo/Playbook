@@ -1,0 +1,292 @@
+.review-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  color: rgb(20, 20, 20);
+  background: rgb(248, 248, 248);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.review-page h1 {
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+
+.review-page h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.review-page p {
+  margin: 0 0 12px;
+}
+
+.review-page a {
+  color: rgb(20, 80, 200);
+  text-decoration: none;
+}
+
+.review-page a:hover {
+  text-decoration: underline;
+}
+
+.crumb {
+  font-size: 13px;
+  color: rgb(100, 100, 100);
+  margin-bottom: 12px;
+}
+
+.drafts-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin-top: 16px;
+  border: 1px solid rgb(220, 220, 220);
+}
+
+.drafts-table th,
+.drafts-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgb(230, 230, 230);
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.drafts-table th {
+  background: rgb(240, 240, 240);
+  font-weight: 600;
+  font-size: 13px;
+  color: rgb(60, 60, 60);
+}
+
+.drafts-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgb(230, 230, 230);
+  font-size: 12px;
+  color: rgb(60, 60, 60);
+  white-space: nowrap;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+@media (max-width: 900px) {
+  .panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: white;
+  border: 1px solid rgb(220, 220, 220);
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.panel .clause-text {
+  white-space: pre-wrap;
+  background: rgb(252, 248, 230);
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid rgb(230, 220, 180);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.context-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.context-grid dt {
+  color: rgb(100, 100, 100);
+}
+
+.context-grid dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+.tier-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tier-card {
+  border: 1px solid rgb(220, 220, 220);
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.tier-card .tier-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.tier-card .tier-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tier-card .approval {
+  font-size: 12px;
+  color: rgb(100, 100, 100);
+}
+
+.tier-card .position {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.tier-card .rationale {
+  font-size: 12px;
+  color: rgb(80, 80, 80);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.tier-ideal {
+  border-left: 3px solid rgb(40, 140, 80);
+}
+.tier-acceptable {
+  border-left: 3px solid rgb(140, 140, 40);
+}
+.tier-fallback_1,
+.tier-fallback_2 {
+  border-left: 3px solid rgb(200, 130, 30);
+}
+.tier-walk_away {
+  border-left: 3px solid rgb(200, 50, 50);
+}
+
+.review-form {
+  background: white;
+  border: 1px solid rgb(220, 220, 220);
+  border-radius: 6px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.review-form label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.review-form .field {
+  margin-bottom: 16px;
+}
+
+.review-form .help {
+  font-size: 12px;
+  color: rgb(100, 100, 100);
+  margin-bottom: 4px;
+}
+
+.review-form input,
+.review-form select,
+.review-form textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  background: white;
+}
+
+.review-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.review-form .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .review-form .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.review-form .justification {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgb(252, 248, 240);
+  border: 1px solid rgb(240, 220, 180);
+  border-radius: 6px;
+}
+
+.review-form .justification h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+
+.button {
+  display: inline-block;
+  background: rgb(20, 80, 200);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: rgb(15, 65, 170);
+  text-decoration: none;
+}
+
+.button.secondary {
+  background: white;
+  color: rgb(60, 60, 60);
+  border: 1px solid rgb(200, 200, 200);
+}
+
+.empty {
+  background: white;
+  border: 1px dashed rgb(200, 200, 200);
+  border-radius: 6px;
+  padding: 32px;
+  text-align: center;
+  color: rgb(120, 120, 120);
+  margin-top: 16px;
+}
+
+.banner-success {
+  background: rgb(230, 245, 230);
+  border: 1px solid rgb(180, 220, 180);
+  color: rgb(20, 100, 40);
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}

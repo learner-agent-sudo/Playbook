@@ -1,16 +1,19 @@
 import type { CollectionConfig } from 'payload'
 
-import { approvalLevelOptions } from './options'
+import { approvalLevelOptions, matchTypeOptions } from './options'
 
 /**
  * One closed negotiation on one clause.
  *
  * Links to the counterparty draft we reviewed and (usually) to the playbook
  * entry whose tier we landed on. Leave `playbookEntry` blank for novel
- * positions that didn't match any existing playbook tier.
+ * positions that didn't match any existing playbook tier (set
+ * `matchType` to `out_of_playbook`).
  *
  * The commercial justification is four separate fields rather than one
  * free-text blob — this is what makes the pattern view in chunk 3 useful.
+ * Justification is only required when `matchType` is not `ideal`
+ * (i.e. when we conceded from our preferred position).
  */
 export const NegotiationLogEntries: CollectionConfig = {
   slug: 'negotiation-log-entries',
@@ -22,6 +25,7 @@ export const NegotiationLogEntries: CollectionConfig = {
     useAsTitle: 'finalPosition',
     defaultColumns: [
       'counterpartyDraft',
+      'matchType',
       'playbookEntry',
       'approvalLevelUsed',
       'dateClosed',
@@ -38,15 +42,21 @@ export const NegotiationLogEntries: CollectionConfig = {
           required: true,
         },
         {
-          name: 'playbookEntry',
-          type: 'relationship',
-          relationTo: 'playbook-entries',
-          admin: {
-            description:
-              'Leave blank if the negotiation was out of playbook (novel position).',
-          },
+          name: 'matchType',
+          type: 'select',
+          required: true,
+          options: [...matchTypeOptions],
         },
       ],
+    },
+    {
+      name: 'playbookEntry',
+      type: 'relationship',
+      relationTo: 'playbook-entries',
+      admin: {
+        description:
+          'Leave blank only if matchType is "Out of playbook".',
+      },
     },
     {
       name: 'finalPosition',
@@ -78,7 +88,7 @@ export const NegotiationLogEntries: CollectionConfig = {
     },
     {
       type: 'collapsible',
-      label: 'Commercial justification',
+      label: 'Commercial justification (required for concessions)',
       admin: {
         initCollapsed: false,
       },
@@ -87,7 +97,6 @@ export const NegotiationLogEntries: CollectionConfig = {
           name: 'leverage',
           label: 'Counterparty leverage',
           type: 'textarea',
-          required: true,
           admin: {
             description:
               "Why the counterparty had (or didn't have) the power to push this position.",
@@ -97,7 +106,6 @@ export const NegotiationLogEntries: CollectionConfig = {
           name: 'riskAssessment',
           label: 'Risk assessment',
           type: 'textarea',
-          required: true,
           admin: {
             description: 'How material the residual risk is in this deal.',
           },
@@ -106,7 +114,6 @@ export const NegotiationLogEntries: CollectionConfig = {
           name: 'tradeOrContext',
           label: 'Trade or context',
           type: 'textarea',
-          required: true,
           admin: {
             description:
               'What was exchanged or the commercial context driving the decision.',
@@ -116,7 +123,6 @@ export const NegotiationLogEntries: CollectionConfig = {
           name: 'precedentManagement',
           label: 'Precedent management',
           type: 'textarea',
-          required: true,
           admin: {
             description: 'How this affects precedent across future deals.',
           },

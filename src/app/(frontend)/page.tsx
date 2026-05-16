@@ -25,6 +25,11 @@ export default async function HomePage() {
           <Link className="admin" href={payloadConfig.routes.admin}>
             {user ? 'Open admin' : 'Sign in to admin'}
           </Link>
+          {user && (
+            <Link className="docs" href="/review">
+              Review queue
+            </Link>
+          )}
         </div>
       </div>
     </div>

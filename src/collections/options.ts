@@ -62,3 +62,17 @@ export const counterpartyTypeOptions = [
   { label: 'Vendor', value: 'vendor' },
   { label: 'Partner', value: 'partner' },
 ] as const
+
+/**
+ * Outcome of a review: how the final position relates to the playbook.
+ * "ideal" means no concession; the other tier values are concessions to
+ * known fallback positions; "out_of_playbook" is a novel decision that
+ * didn't fit any existing tier.
+ */
+export const matchTypeOptions = [
+  { label: 'Matches ideal', value: 'ideal' },
+  { label: 'Within acceptable', value: 'acceptable' },
+  { label: 'Landed at fallback 1', value: 'fallback_1' },
+  { label: 'Landed at fallback 2', value: 'fallback_2' },
+  { label: 'Out of playbook (novel decision)', value: 'out_of_playbook' },
+] as const

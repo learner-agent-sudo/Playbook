@@ -212,8 +212,9 @@ export interface CounterpartyDraft {
 export interface NegotiationLogEntry {
   id: number;
   counterpartyDraft: number | CounterpartyDraft;
+  matchType: 'ideal' | 'acceptable' | 'fallback_1' | 'fallback_2' | 'out_of_playbook';
   /**
-   * Leave blank if the negotiation was out of playbook (novel position).
+   * Leave blank only if matchType is "Out of playbook".
    */
   playbookEntry?: (number | null) | PlaybookEntry;
   finalPosition: string;
@@ -226,19 +227,19 @@ export interface NegotiationLogEntry {
   /**
    * Why the counterparty had (or didn't have) the power to push this position.
    */
-  leverage: string;
+  leverage?: string | null;
   /**
    * How material the residual risk is in this deal.
    */
-  riskAssessment: string;
+  riskAssessment?: string | null;
   /**
    * What was exchanged or the commercial context driving the decision.
    */
-  tradeOrContext: string;
+  tradeOrContext?: string | null;
   /**
    * How this affects precedent across future deals.
    */
-  precedentManagement: string;
+  precedentManagement?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -411,6 +412,7 @@ export interface CounterpartyDraftsSelect<T extends boolean = true> {
  */
 export interface NegotiationLogEntriesSelect<T extends boolean = true> {
   counterpartyDraft?: T;
+  matchType?: T;
   playbookEntry?: T;
   finalPosition?: T;
   approvalLevelUsed?: T;

@@ -12,6 +12,7 @@ import { NegotiationLogEntries } from './collections/NegotiationLogEntries'
 import { PlaybookEntries } from './collections/PlaybookEntries'
 import { SubClauses } from './collections/SubClauses'
 import { Users } from './collections/Users'
+import { seed } from './seed'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -46,4 +47,7 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
+  onInit: async (payload) => {
+    await seed(payload)
+  },
 })
