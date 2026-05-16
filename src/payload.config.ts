@@ -43,10 +43,6 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
-    // Auto-sync the schema on startup. Payload only does this in development
-    // by default; we force it on so the deployed prototype can create its own
-    // tables without a separate migration step. Trade-off: slower cold starts.
-    push: true,
   }),
   sharp,
   plugins: [],
