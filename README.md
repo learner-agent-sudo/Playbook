@@ -1,57 +1,58 @@
 # Contract Playbook (prototype)
 
 A personal portfolio project: a dynamic playbook for SaaS contract
-negotiation, built in plain Django so a lawyer can read and modify it.
+negotiation. Built on Next.js + Payload CMS + Postgres, deployed on Vercel.
 
-This repo currently covers **Chunk 1**: the data model and a minimal admin UI
-to create, view, edit and delete records. The review workflow (Chunk 2) and
+This repo currently covers **Chunk 1**: the data model and an admin UI to
+create, view, edit and delete records. The review workflow (Chunk 2) and
 pattern surfacing (Chunk 3) come later.
 
-## Run it locally
+## Stack
 
-You need Python 3.11+ on your machine. From the project root:
-
-```bash
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
-```
-
-Then open <http://127.0.0.1:8000/>. The root URL redirects to `/admin/`.
-Log in with the superuser you just created.
-
-The first migration creates the schema. The second seeds three example
-*Limitation of Liability · General cap* playbook entries (ideal, acceptable,
-fallback 1) so the admin isn't empty.
+- **Next.js 15** (App Router) — the web framework.
+- **Payload CMS 3** — auto-generates the admin UI from collection schemas
+  defined in TypeScript. Acts as the "Django admin" of the JS world.
+- **Postgres** — primary data store. Hosted via Vercel's Neon integration.
+- **Vercel** — hosting and CI.
 
 ## The data model
 
-Five tables, all in `playbook/models.py`:
+Five collections, all in `src/collections/`:
 
-| Table | What it represents |
+| Collection | What it represents |
 |---|---|
-| `ClauseFamily` | Reference list — e.g. *Limitation of Liability*, *IP Indemnity*. |
-| `SubClause` | Reference list — e.g. *General cap*, *Confidentiality cap*. Independent of family. |
-| `PlaybookEntry` | One position on one clause family + sub-clause at one tier. |
-| `CounterpartyDraft` | One incoming clause to review, with deal context. |
-| `NegotiationLogEntry` | One closed negotiation, linked to a draft and (usually) a playbook entry. |
+| `ClauseFamilies` | Reference list — e.g. *Limitation of Liability*, *IP Indemnity*. |
+| `SubClauses` | Reference list — e.g. *General cap*, *Confidentiality cap*. Independent of family. |
+| `PlaybookEntries` | One position on one clause family + sub-clause at one tier. |
+| `CounterpartyDrafts` | One incoming clause to review, with deal context. |
+| `NegotiationLogEntries` | One closed negotiation, linked to a draft and (usually) a playbook entry. |
 
 Shared dropdown values — tiers, approval levels, industries, deal-value
-bands, etc. — live as choice lists at the top of `playbook/models.py`. To
-add a new option, add a tuple to the relevant list and run
-`python manage.py makemigrations playbook && python manage.py migrate`.
+bands, etc. — live in `src/collections/options.ts`. To add a new option,
+add an entry to the relevant list and redeploy.
 
-## How CRUD works
+The admin user is the `Users` collection (auth-enabled). The first user is
+created on first visit to `/admin`.
 
-Django generates the create / list / edit / delete screens automatically from
-the models. `playbook/admin.py` just tunes column lists, filters and form
-sections — you don't need to touch it to add or edit records.
+## Running locally
 
-Each model has a dedicated screen in the admin sidebar:
+```bash
+npm install
+cp .env.example .env
+# Edit .env: paste a Postgres connection string and a random PAYLOAD_SECRET
+npm run dev
+```
 
-- *Clause families* and *Sub clauses* — manage the vocabularies.
-- *Playbook entries* — your positions, one per tier.
-- *Counterparty drafts* — incoming clauses you want to review.
-- *Negotiation log entries* — closed negotiations. The four sub-fields of the
-  commercial justification appear as a separate section on the form.
+Then open <http://localhost:3000/> — it links to the admin at `/admin`.
+
+## Deploying to Vercel
+
+The repo is wired to deploy to Vercel out of the box. You need two env vars
+in the Vercel project:
+
+- `DATABASE_URL` — Postgres connection string (auto-set if you provision via
+  Vercel → Storage → Neon).
+- `PAYLOAD_SECRET` — any long random string (used to sign auth cookies).
+
+On first deploy, Payload runs schema migrations against the database
+automatically the first time the app starts.
